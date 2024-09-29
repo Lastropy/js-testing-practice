@@ -12,3 +12,9 @@ export function fizzBuzz(n) {
   if (n % 5 === 0) return "Buzz";
   return n.toString();
 }
+
+export function factorial(n) {
+  if (n === 0 || n === 1) return 1;
+  if (n < 0) return undefined;
+  return n * factorial(n - 1);
+}

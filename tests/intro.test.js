@@ -1,6 +1,6 @@
 // The file to test intro.js
 import { describe, it, expect, assert } from "vitest";
-import { max, fizzBuzz } from "../src/intro";
+import { max, fizzBuzz, factorial } from "../src/intro";
 
 //describe - define a SUITE of tests
 describe("max", () => {
@@ -59,5 +59,28 @@ describe("fizzBuzz", () => {
 
   it("should return the number as string if argument is neither divisible by 3 nor 5", () => {
     expect(fizzBuzz(23)).toBe("23");
+  });
+});
+
+// TDD (Test Driven Development) Practice
+describe("factorial", () => {
+  it("should return 1 if argument is 0", () => {
+    expect(factorial(0)).toBe(1);
+  });
+
+  it("should return 1 if argument is 1", () => {
+    expect(factorial(1)).toBe(1);
+  });
+
+  it("should return undefined if argument is negative", () => {
+    expect(factorial(-3)).toBeUndefined();
+  });
+
+  it("should return multiplication of first 6 positive numbers if given 6", () => {
+    expect(factorial(6)).toBe(720);
+  });
+
+  it("should return multiplication of first 18 positive numbers if given 18", () => {
+    expect(factorial(18)).toBe(6402373705728000);
   });
 });
