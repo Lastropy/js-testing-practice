@@ -73,17 +73,31 @@ describe("validateUserInput", () => {
 
 // Exercise: Boundary Testing
 describe("isValidUsername", () => {
+	const minLength = 5;
+	const maxLength = 15;
 	it("should return false if username is smaller than min length", () => {
-		expect(isValidUsername("happ")).toBe(false);
+		expect(isValidUsername("a".repeat(minLength - 1))).toBe(
+			false
+		);
 	});
 
 	it("should return false if username is greater than max length", () => {
-		expect(isValidUsername("happ123456789098765543bsbn")).toBe(
+		expect(isValidUsername("a".repeat(maxLength + 1))).toBe(
 			false
 		);
 	});
 
 	it("should return true if username is within the range of min and max length", () => {
-		expect(isValidUsername("happ9048390")).toBe(true);
+		expect(isValidUsername("a".repeat(minLength + 1))).toBe(
+			true
+		);
+		expect(isValidUsername("a".repeat(maxLength - 1))).toBe(
+			true
+		);
+	});
+
+	it("should return true if username is at the boundary of the range of min and max length", () => {
+		expect(isValidUsername("a".repeat(minLength))).toBe(true);
+		expect(isValidUsername("a".repeat(maxLength))).toBe(true);
 	});
 });
