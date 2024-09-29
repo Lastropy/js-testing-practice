@@ -30,20 +30,6 @@ describe("getCoupons", () => {
 	});
 });
 
-// export function validateUserInput(username, age) {
-//     let errors = [];
-
-//     if (typeof username !== 'string' || username.length < 3) {
-//       errors.push('Invalid username');
-//     }
-
-//     if (typeof age !== 'number' || age < 18) {
-//       errors.push('Invalid age');
-//     }
-
-//     return errors.length === 0 ? 'Validation successful' : errors.join(', ');
-//   }
-// Tests for validateUserInput
 // Exercise: Positive and negative testing
 describe("validateUserInput", () => {
 	// Positive Testing
