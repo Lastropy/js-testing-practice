@@ -1,7 +1,7 @@
 import { vi, it, expect, describe } from "vitest";
 
-describe("test suite", () => {
-	it("test case", async () => {
+describe("Mock Function Basics", () => {
+	it("Definitions and Matchers", async () => {
 		const greet = vi.fn();
 
 		// Ways to mock a function
@@ -16,5 +16,13 @@ describe("test suite", () => {
 		expect(greet).toHaveBeenCalledWith("Hi");
 		expect(greet).toHaveBeenCalledOnce();
 		expect(greet).toHaveBeenCalledTimes(1);
+	});
+
+	it("Mock Function Exercise 1 -  sendMessage", async () => {
+		const sendMessage = vi.fn();
+		sendMessage.mockImplementation((message) => message);
+		const result = sendMessage("ok");
+		expect(sendMessage).toHaveBeenCalledWith("ok");
+		expect(result).toBe("ok");
 	});
 });
