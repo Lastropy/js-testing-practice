@@ -1,5 +1,9 @@
 import { describe, it, expect, assert } from "vitest";
-import { getCoupons, validateUserInput } from "../src/core";
+import {
+	getCoupons,
+	isValidUsername,
+	validateUserInput,
+} from "../src/core";
 
 describe("getCoupons", () => {
 	it("should not return a non-empty array", () => {
@@ -64,5 +68,22 @@ describe("validateUserInput", () => {
 		const errors = validateUserInput(99, 3);
 		expect(errors).toMatch(/invalid age/i);
 		expect(errors).toMatch(/invalid username/i);
+	});
+});
+
+// Exercise: Boundary Testing
+describe("isValidUsername", () => {
+	it("should return false if username is smaller than min length", () => {
+		expect(isValidUsername("happ")).toBe(false);
+	});
+
+	it("should return false if username is greater than max length", () => {
+		expect(isValidUsername("happ123456789098765543bsbn")).toBe(
+			false
+		);
+	});
+
+	it("should return true if username is within the range of min and max length", () => {
+		expect(isValidUsername("happ9048390")).toBe(true);
 	});
 });
