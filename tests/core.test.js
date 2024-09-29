@@ -1,8 +1,15 @@
-import { describe, it, expect, assert } from "vitest";
+import {
+	describe,
+	it,
+	expect,
+	beforeAll,
+	afterEach,
+} from "vitest";
 import {
 	canDrive,
 	getCoupons,
 	isValidUsername,
+	Stack,
 	validateUserInput,
 } from "../src/core";
 
@@ -136,4 +143,76 @@ describe("canDrive", () => {
 			expect(canDrive(age, countryCode)).toBe(result);
 		}
 	);
+});
+
+// Setup and Teardown
+describe("Stack", () => {
+	let stack;
+	// Setup
+	beforeAll(() => {
+		stack = new Stack();
+	});
+
+	// Teardown
+	afterEach(() => {
+		stack.clear();
+	});
+
+	it("size should return 0 if stack is empty", () => {
+		expect(stack.size()).toBe(0);
+	});
+
+	it("size should return size of stack if stack is not empty", () => {
+		stack.push(99);
+		stack.push(3);
+		stack.push(7);
+		expect(stack.size()).toBe(3);
+	});
+
+	it("isEmpty should return 0 if stack is empty", () => {
+		expect(stack.size()).toBe(0);
+		expect(stack.isEmpty()).toBe(true);
+	});
+
+	it("clear should clear all items in the stack", () => {
+		stack.push(99);
+		stack.push(49);
+		stack.push(59);
+		expect(stack.size()).toBe(3);
+		stack.clear();
+		expect(stack.size()).toBe(0);
+	});
+
+	it("isEmpty should return stack size if stack is not empty", () => {
+		stack.push(3);
+		stack.push(99);
+		expect(stack.isEmpty()).toBe(false);
+	});
+
+	it("push should insert an item in the stack", () => {
+		stack.push(3);
+		expect(stack.size()).toBe(1);
+	});
+
+	it("pop should remove an item from the top of the stack", () => {
+		stack.push(99);
+		expect(stack.pop()).toBe(99);
+		expect(stack.size()).toBe(0);
+	});
+
+	it("pop should throw error if empty stack", () => {
+		expect(stack.size()).toBe(0);
+		expect(() => stack.pop()).toThrow(/empty/i);
+	});
+
+	it("peek should only show the top item and not pop it", () => {
+		stack.push(9);
+		expect(stack.peek()).toBe(9);
+		expect(stack.size()).toBe(1);
+	});
+
+	it("peek should throw error if empty stack", () => {
+		expect(stack.size()).toBe(0);
+		expect(() => stack.peek()).toThrow(/empty/i);
+	});
 });
