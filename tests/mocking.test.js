@@ -1,4 +1,9 @@
 import { vi, it, expect, describe } from "vitest";
+import { getShippingInfo } from "../src/mocking";
+import { getShippingQuote } from "../src/libs/shipping";
+
+// Mocking a 3rd party Module
+vi.mock("../src/libs/shipping");
 
 describe("Mock Function Basics", () => {
 	it("Definitions and Matchers", async () => {
@@ -24,5 +29,25 @@ describe("Mock Function Basics", () => {
 		const result = sendMessage("ok");
 		expect(sendMessage).toHaveBeenCalledWith("ok");
 		expect(result).toBe("ok");
+	});
+});
+
+describe("getShippingInfo", () => {
+	it("should return us the shipping info if quote can be fetched", () => {
+		// Mocking a 3rd party Module Dependency Function Value
+		vi.mocked(getShippingQuote).mockReturnValue({
+			cost: 8,
+			estimatedDays: 12,
+		});
+		const result = getShippingInfo("USA");
+		expect(result).toMatch(/\$8/i);
+		expect(result).toMatch(/12 Days/i);
+	});
+
+	it("should return us unavailable if quote cannot be fetched", () => {
+		// Mocking a 3rd party Module Dependency Function Value
+		vi.mocked(getShippingQuote).mockReturnValue(null);
+		const result = getShippingInfo("USA");
+		expect(result).toMatch(/unavailable/i);
 	});
 });
