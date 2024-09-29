@@ -1,5 +1,6 @@
 import { describe, it, expect, assert } from "vitest";
 import {
+	canDrive,
 	getCoupons,
 	isValidUsername,
 	validateUserInput,
@@ -100,4 +101,39 @@ describe("isValidUsername", () => {
 		expect(isValidUsername("a".repeat(minLength))).toBe(true);
 		expect(isValidUsername("a".repeat(maxLength))).toBe(true);
 	});
+});
+
+// Parameterized Testing
+describe("canDrive", () => {
+	it("should return error if countrycode is invalid", () => {
+		expect(canDrive(30, "UN")).toMatch(/invalid/i);
+	});
+
+	it("should return error if both age and countrycode is invalid", () => {
+		expect(canDrive(null, "UN")).toMatch(/invalid/i);
+	});
+
+	it.each([
+		{ age: 30, countryCode: "US", result: true },
+		{ age: 35, countryCode: "UK", result: true },
+	])(
+		"should return true if age and countrycode are valid",
+		({ age, countryCode, result }) => {
+			expect(canDrive(age, countryCode)).toBe(result);
+		}
+	);
+
+	it.each([
+		{ age: 15, countryCode: "US", result: false },
+		{ age: 16, countryCode: "US", result: true },
+		{ age: 17, countryCode: "US", result: true },
+		{ age: 16, countryCode: "UK", result: false },
+		{ age: 17, countryCode: "UK", result: true },
+		{ age: 18, countryCode: "UK", result: true },
+	])(
+		"should return $result for age=$age and country=$countryCode",
+		({ age, countryCode, result }) => {
+			expect(canDrive(age, countryCode)).toBe(result);
+		}
+	);
 });
