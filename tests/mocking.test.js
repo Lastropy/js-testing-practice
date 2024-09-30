@@ -9,11 +9,23 @@ import { trackPageView } from "../src/libs/analytics";
 import { charge } from "../src/libs/payment";
 
 // Mocking a 3rd party Module Values
+// returns a dictionary, with keys as function names of that module and value as vi.fn()
+// Hence, vi.mock(...) does complete mocking of the module
 vi.mock("../src/libs/shipping");
 // Understanding the interaction between units
 vi.mock("../src/libs/analytics");
 // Exercise - 1
 vi.mock("../src/libs/payment");
+// Let's say, we want to use some functions of module as is.
+// Then, we need to do Partial Mocking.
+vi.mock("../src/libs/email", async (importOriginalModule) => {
+	const originalModule = await importOriginalModule();
+	// Replacing only sendEmail function with a mock function
+	return {
+		...originalModule,
+		sendEmail: vi.fn(),
+	};
+});
 
 describe("Mock Function Basics", () => {
 	it("Definitions and Matchers", async () => {
