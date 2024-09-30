@@ -1,5 +1,6 @@
 import { vi, it, expect, describe } from "vitest";
 import {
+	getDiscount,
 	getShippingInfo,
 	renderPage,
 	submitOrder,
@@ -116,5 +117,23 @@ describe("submitOrder", () => {
 		expect(result).toHaveProperty("error");
 		expect(result.success).toBe(false);
 		expect(result.error).toBeTruthy();
+	});
+});
+
+describe("getDiscount", () => {
+	it("should return 0 discount if not Christmas Day", () => {
+		vi.setSystemTime("2024-12-24 23:59");
+		expect(getDiscount()).toBe(0);
+
+		vi.setSystemTime("2024-12-26 00:00");
+		expect(getDiscount()).toBe(0);
+	});
+
+	it("should return 20% discount if Christmas Day", () => {
+		vi.setSystemTime("2024-12-25 00:00");
+		expect(getDiscount()).toBe(0.2);
+
+		vi.setSystemTime("2024-12-25 23:59");
+		expect(getDiscount()).toBe(0.2);
 	});
 });
